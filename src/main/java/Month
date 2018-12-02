@@ -1,0 +1,50 @@
+import java.util.HashMap;
+public class Month {
+	private HashMap<String,Double> hm;
+	private HashMap<String,Boolean> hmt;
+	private String [] list;
+	
+	public Month(){
+		hm = new HashMap<String, Double>();
+		hmt = new HashMap<String, Boolean>();
+		list = new String[]{"Administration",
+							"Amortization",
+							"Automobile Expense",
+							"Bank Service Charges", 
+							"Business Meals",
+							"Business Promotion",
+							"Cash Discounts",
+							"Contract Labor",
+							"Customer Refunds",
+							"Damages",
+							"Depreciation",
+							"Insurance Liability",
+							"Interest",
+							"Licenses and Permits",
+							"Meals and Entertainment",
+							"Office Supplies",
+							"Postage and Delivery",
+							"Professional Fees",
+							"Property Taxes",
+							"Rent Building",
+							"Rent Equipment",
+							"Repairs Building",
+							"Repairs Landscaping",
+							"Repairs Equipment",
+							"Repairs Janitorial",
+							"Shop Supplies",
+							"Small Tools",
+							"Telephone",
+							"Towing",
+							"Training",
+							"Travel",
+							"Uniforms",
+							"Utilities",
+							"Waste Oil Disposal Fee",
+							"Advertising",
+							"Royalty",
+							"Wages",
+							"Payroll"
+							};
+	}
+}
