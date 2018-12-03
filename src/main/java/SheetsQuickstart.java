@@ -65,6 +65,7 @@ public class SheetsQuickstart {
         Scanner in = new Scanner(System.in);
         System.out.println("Type in the Spreadsheet ID: ");
         System.out.println("Type in the Sheet Name: ");
+        Month m = new Month();
         //range += "A:D";
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
@@ -77,6 +78,7 @@ public class SheetsQuickstart {
             System.out.println("No data found.");
         } else {
             System.out.println("");
+            m.parseList(values);
             for (List row : values) {
             	for(int i = 0; i < row.size(); i++)
             		System.out.printf("%s\\", ((String)row.get(i)).trim());
