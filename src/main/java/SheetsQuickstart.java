@@ -61,12 +61,9 @@ public class SheetsQuickstart {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         String spreadsheetId = "1nPWby8B_vgs-5dih_gIMUmtBpBh2K6ZurbYFwaM0FxA";
-        String range = "Jan!A:B";
+        String range = "Oct!A:B";
         Scanner in = new Scanner(System.in);
-        System.out.println("Type in the Spreadsheet ID: ");
-        System.out.println("Type in the Sheet Name: ");
         Month m = new Month();
-        //range += "A:D";
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
@@ -79,11 +76,6 @@ public class SheetsQuickstart {
         } else {
             System.out.println("");
             m.parseList(values);
-            for (List row : values) {
-            	for(int i = 0; i < row.size(); i++)
-            		System.out.printf("%s\\", ((String)row.get(i)).trim());
-                System.out.println();
-            }
         }
     }
 }
