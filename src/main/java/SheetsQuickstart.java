@@ -6,11 +6,12 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.*;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.ValueRange;
+import com.google.api.services.sheets.v4.model.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,21 +62,67 @@ public class SheetsQuickstart {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         String spreadsheetId = "1nPWby8B_vgs-5dih_gIMUmtBpBh2K6ZurbYFwaM0FxA";
-        String range = "Oct!A:B";
+        String range = "Mar";
         Scanner in = new Scanner(System.in);
-        Month m = new Month();
+        Store s = new Store();
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-        ValueRange response = service.spreadsheets().values()
-                .get(spreadsheetId, range)
-                .execute();
-        List<List<Object>> values = response.getValues();
-        if (values == null || values.isEmpty()) {
-            System.out.println("No data found.");
-        } else {
-            System.out.println("");
-            m.parseList(values);
+        List<Sheet> sList = service.spreadsheets()
+                .get(spreadsheetId)
+                .execute().getSheets();
+
+        for(Sheet e : sList){
+          ValueRange response = service.spreadsheets().values()
+                  .get(spreadsheetId, e.getProperties().getTitle() + "!A:B")
+                  .execute();
+          List<List<Object>> values = response.getValues();
+          // System.out.println(e.getProperties().getTitle() + "!A:B");
+          Month m = new Month();
+          // List<RowData> rd = e.getData().getRowData();
+          // List<List<Object>> values = new List<List<Object>>();
+          // for(RowData f : rd){
+          //   List<Object> o = new List<Object>();
+          //   List<CellData> cd = f.getValues();
+          //   for(CellData g : cd)
+          //     o.add(g.getFormattedValue());
+          //   values.add(o);
+          if (values == null || values.isEmpty()) {
+              System.out.println("No data found.");
+          } else {
+              // System.out.println("");
+              m.parseList(values);
+              s.addMonth(m);
+          }
         }
-    }
+        String [] add = new String[]{
+          "Business Promotion",
+          "Cash Discounts",
+          "Repairs Janitorial",
+          "Repairs Building",
+          "Travel",
+          "Waste Oil Disposal Fee"
+        };
+        s.addCategories(add);
+        s.print();
+        System.out.println();
+        //   ValueRange response = service.spreadsheets().values()
+        //           .get(spreadsheetId, e.getProperties().getTitle())
+        //           .execute();
+
+        // Month m = new Month();
+        // ValueRange response = service.spreadsheets().values()
+        //         .get(spreadsheetId, range)
+        //         .execute();
+        // List<List<Object>> values = response.getValues();
+        // if (values == null || values.isEmpty()) {
+        //     System.out.println("No data found.");
+        // } else {
+        //     System.out.println("");
+        //     m.parseList(values);
+        // }
+        // m.print();
+
+      }
+
 }

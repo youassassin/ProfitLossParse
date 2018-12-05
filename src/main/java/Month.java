@@ -4,7 +4,7 @@ public class Month extends Categories {
 	private HashMap<String, Double> hm;
 	private HashMap<String, Boolean> hmt;
 	private boolean rentSwitch;
-	public static boolean debug = true;
+	public static boolean debug = false;
 
 	public Month(){
 		super();
@@ -43,38 +43,19 @@ public class Month extends Categories {
 		return out.replace(",", "").replace("$", "").trim();
 	}
 
-	private void print(){
-		for(String e : list)
-			if(hmt.get(e)){
-				if(e.equals("Advertising"))
-					System.out.println();
-				if(debug)
-					System.out.print(e+", ");
-				boolean x = e.equals("Amortization") ||
-										e.equals("Interest") ||
-										e.equals("Depreciation");
-				System.out.println(!x ? hm.get(e) : "");
-			}
-		System.out.println();
-		double round = Math.round((hm.get("Amortization") +
-															 hm.get("Interest") +
-															 hm.get("Depreciation"))*100)/100.0;
-		System.out.println("AID: " + round);
-	}
-
 	private int findMatch(String out){
 		out = out.toLowerCase();
 		for(int i = 0; i < list.length; i++){
 			switch(i){
-				case 3: case 11: case 12: case 34: case 39:
+				case 3: case 11: case 12: case 33: case 38:
 					if(out.contains(matcher[i]) && out.contains("tota"))
 						return i;
 					break;
-				case 20: case 21:
+				case 19: case 20:
 					if(out.contains(matcher[i]) && rentSwitch)
 						return i;
 					break;
-				case 22:
+				case 21:
 					if(out.contains(matcher[i]) && !out.contains("tota"))
 						return i;
 					break;
@@ -109,14 +90,18 @@ public class Month extends Categories {
 				int t = findMatch(cat);
 				if(t > -1){
 					hmt.replace(list[t], true);
-					if(row.size() > 1)
-						hm.replace(list[t], Double.parseDouble(trim((String)row.get(1))));
+					if(row.size() > 1){ //&& ((String)row.get(1)).length() > 0){
+						// System.out.println(row.get(0)+" "+row.get(1));
+						try{hm.replace(list[t], Double.parseDouble(trim((String)row.get(1))));}
+						catch(Exception e){}
+					}
 				}
 			}
 		}
 		double round = Math.round((hm.get("Payroll") - hm.get("Wages"))*100)/100.0;
 		hm.replace("Payroll", round);
-		// print();
+		if(debug)
+			print();
 	}
 
 	public HashMap<String, Double> getHM(){
@@ -124,5 +109,24 @@ public class Month extends Categories {
 	}
 	public HashMap<String, Boolean> getHMT(){
 		return hmt;
+	}
+
+	public void print(){
+		for(String e : list)
+			if(hmt.get(e)){
+				if(e.equals("Advertising"))
+					System.out.println();
+				if(debug)
+					System.out.print(e+", ");
+				boolean x = e.equals("Amortization") ||
+										e.equals("Interest") ||
+										e.equals("Depreciation");
+				System.out.println(!x ? hm.get(e) : "");
+			}
+		System.out.println();
+		double round = Math.round((hm.get("Amortization") +
+															 hm.get("Interest") +
+															 hm.get("Depreciation"))*100)/100.0;
+		System.out.println("AID: " + round);
 	}
 }

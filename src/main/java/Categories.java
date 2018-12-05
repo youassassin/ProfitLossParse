@@ -20,7 +20,6 @@ public class Categories{
               "Meals and Entertainment",
               "Office Supplies",
               "Postage and Delivery",
-              "Preemployment Screening",
               "Professional Fees",
               "Property Taxes",
               "Rent Building",
@@ -62,12 +61,11 @@ public class Categories{
               "ente",
               "offi",
               "post",
-              "pree",
               "profe",
               "prop",
-              "buil",//\rent 20
-              "equi",//\rent 21
-              "ng r",//\repa 22
+              "buil",//\rent 19
+              "equi",//\rent 20
+              "ng r",//\repa 21
               "lands",
               "nt r",
               "jani",
@@ -79,12 +77,12 @@ public class Categories{
               "trav",
               "unca",
               "unif",
-              "util",//tota 34
+              "util",//tota 33
               "te o",
               "adve",
               "roya",
               "wage",
-              "lyon" //tota - wage 39
+              "lyon" //tota - wage 38
     };
   }
 }
